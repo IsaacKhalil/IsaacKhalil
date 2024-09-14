@@ -1,0 +1,113 @@
+# This is a basic workflow to helimport React from 'react';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+
+const SignUp = () => {
+  return (
+    <div className="container mx-auto flex justify-center items-center min-h-screen">
+      <Card className="w-full max-w-md bg-gray-900 border-gold">
+        <CardHeader>
+          <CardTitle className="text-2xl font-bold text-center text-gold">Sign Up for Hail Empire Academy</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form className="space-y-4">
+            <div>
+              <Input type="text" placeholder="Full Name" className="bg-gray-800 text-white border-gold" />
+            </div>
+            <div>
+              <Input type="email" placeholder="Email" className="bg-gray-800 text-white border-gold" />
+            </div>
+            <div>
+              <Input type="password" placeholder="Password" className="bg-gray-800 text-white border-gold" />
+            </div>
+            <div>
+              <Input type="password" placeholder="Confirm Password" className="bg-gray-800 text-white border-gold" />
+            </div>
+            <Button className="w-full bg-gold text-black hover:bg-yellow-400">Sign Up</Button>
+          </form>
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
+
+export default SignUp;
+src/App.jsx
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Toaster } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import Header from './components/Header';
+import Footer from './components/Footer';
+import LandingPage from './pages/LandingPage';
+import Dashboard from './pages/Dashboard';
+import Services from './pages/Services';
+import Lessons from './pages/Lessons';
+import Login from './pages/Login';
+import SignUp from './pages/SignUp';
+
+const queryClient = new QueryClient();
+
+const App = () => {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Router>
+          <div className="flex flex-col min-h-screen bg-black text-white">
+            <Header />
+            <main className="flex-grow">
+              <Routes>
+                <Route path="/" element={<LandingPage />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/services" element={<Services />} />
+                <Route path="/lessons" element={<Lessons />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<SignUp />} />
+              </Routes>
+            </main>
+            <Footer />
+          </div>
+        </Router>
+        <Toaster />
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+};
+
+export default App;p you get started with Actions
+
+name: CI
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v4
+
+      # Runs a single command using the runners shell
+      - name: Run a one-line script
+        run: echo Hello, world!
+
+      # Runs a set of commands using the runners shell
+      - name: Run a multi-line script
+        run: |
+          echo Add other actions to build,
+          echo test, and deploy your project.
